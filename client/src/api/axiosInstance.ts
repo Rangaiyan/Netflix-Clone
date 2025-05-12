@@ -1,6 +1,4 @@
 import axios from 'axios';
-
-
 const api = axios.create({
   baseURL: 'http://localhost:5000',
   headers: {
@@ -18,6 +16,5 @@ api.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
-
 
 export default api;

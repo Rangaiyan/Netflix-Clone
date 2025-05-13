@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
-import { Movie } from 'src/schemas/Movieschema/movies.schema';
+import { Movie } from 'src/modules/user/Movieschema/movies.schema';
 
 export type UserDocument = User & Document;
 

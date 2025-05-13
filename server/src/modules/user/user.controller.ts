@@ -6,20 +6,7 @@ import { UserDto } from './dto/user.dto';
 @Controller('users')
 export class UserController {
     constructor(private userService:UserService){}
-  // @Post()
-  // createUser() {
-  //     return 'User created';
-  // }
 
-  // @Post(':id')
-  // updateUser(@Param('id') id: string) {
-  //     return `User with ID ${id} updated`;
-  // }
-//   @Post(':id')
-//   getUsers(@Req() req: Request) {
-//     console.log(req);
-//     return req.params.id;
-//   }
   @Get()
   getAllUsers() {
     return this.userService.getUser();

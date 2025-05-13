@@ -5,6 +5,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MovieModule } from './modules/Movies/movie.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { MovieModule } from './modules/Movies/movie.module';
       load: [configuration],
       isGlobal: true,
       cache: true,
+      
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
@@ -22,7 +24,8 @@ import { MovieModule } from './modules/Movies/movie.module';
     }),
     AuthModule,
     UserModule,
-    MovieModule
+    MovieModule,
+    AdminModule
   ],
 
 })

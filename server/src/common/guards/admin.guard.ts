@@ -1,17 +1,29 @@
-import { CanActivate, ExecutionContext, Injectable, ForbiddenException } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable, ForbiddenException, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AdminGuard implements CanActivate {
+  constructor(private jwtService: JwtService) {} 
+
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();
-    const user = request.user;
+    const token = request.headers.authorization?.split(' ')[1];
 
-    // console.log('AdminUser:', user);
-
-    if (!user || user.isAdmin !== true) {
-      throw new ForbiddenException('Access denied only Admins');
+    if (!token) {
+      throw new UnauthorizedException('No token provided');
     }
 
-    return true;
+    try {
+      const decoded = this.jwtService.verify(token); 
+      request.user = decoded; 
+
+      if (!decoded.isAdmin) {
+        throw new ForbiddenException('Admins only');
+      }
+
+      return true; 
+    } catch (error) {
+      throw new UnauthorizedException('Invalid token');
+    }
   }
 }

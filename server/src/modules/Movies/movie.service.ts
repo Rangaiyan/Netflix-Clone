@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Movie, MovieDocument } from '../../schemas/Movieschema/movies.schema';
+import { Movie, MovieDocument } from '../user/Movieschema/movies.schema';
 import { CreateMovieDto } from './dto/crateMovie.dto';
 
 @Injectable()

@@ -43,6 +43,7 @@ export class AuthService {
 
     return {
       access_token: this.jwtService.sign(payload),
+      isAdmin:user.isAdmin,
     };
   }
 
@@ -60,7 +61,7 @@ export class AuthService {
       name,
       email,
       password: hashedPassword,
-      isAdmin: false,
+      isAdmin:false,
     });
 
     this.logger.log(`User signed up successfully: ${email}`);

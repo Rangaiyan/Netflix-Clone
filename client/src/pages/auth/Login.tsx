@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; 
 import NFlogo from "../../assets/netflix-logo.png";
 import bgImg from "../../assets/hero.png";
 import axios from "axios";
@@ -8,6 +9,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [error, setError] = useState("");
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -71,16 +73,23 @@ const Login = () => {
               />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-4 relative">
               <input
-                type="password"
+                type={showPassword?"text":"password"}
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full h-12 px-4 bg-gray-700 text-white rounded focus:outline-none"
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-5 text-gray-400 hover:text-white transition"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
             </div>
-
+            
             {error && <p className="text-red-500 text-sm">{error}</p>}
 
             <button

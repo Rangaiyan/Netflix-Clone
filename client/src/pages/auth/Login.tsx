@@ -31,11 +31,12 @@ const Login = () => {
       console.log(response.data.access_token); 
   
       if (response.status===201) {
-        const token = response.data.access_token; 
-        if (token) {
+        const {token,isAdmin} = response.data; 
+        if (token || isAdmin) {
           localStorage.setItem('accessToken', token);
+          localStorage.setItem("userRole", isAdmin ? "admin" : "user");
           console.log("navi")
-          navigate("/home");
+          navigate(isAdmin ? "/admin" : "/home");
         } else {
           setError("Token not found in response.");
         }

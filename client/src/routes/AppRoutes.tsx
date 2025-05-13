@@ -4,6 +4,7 @@ import Login from "../pages/auth/Login";
 import Landing from "../pages/LandingPage";
 import Register from "../pages/auth/Register";
 import Home from "../pages/Home";
+import Admin from "../Admin/Add";
 
 function AppRoutes() {
   const location = useLocation();
@@ -27,6 +28,7 @@ function AppRoutes() {
         path="*"
         element={<Navigate to={isAuth ? "/home" : "/login"} replace />}
       />
+      <Route path="/admin" element={<Admin />}/>
     </Routes>
   );
 }

@@ -51,7 +51,7 @@ const Register = () => {
         return;
       }
   
-      if (response.status === 201 || response.data.message === "User signed up successfully!") {
+      if (response.status === 200 || response.data.message === "User signed up successfully!") {
         navigate("/home");
       } else {
         setError("Signup failed. Please try again.");

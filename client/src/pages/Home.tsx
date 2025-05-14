@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const navigate = useNavigate();
-
+  console.log("Home")
   
   const handleLogout = () => {
     localStorage.removeItem('accessToken'); 

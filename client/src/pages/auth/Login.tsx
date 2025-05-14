@@ -13,42 +13,42 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-  
-    if (!email || !password) {
-      setError("Email and password are required.");
-      return;
-    }
-  
-    setError("");
-  
-    try {
-      const response = await axios.post("http://localhost:3000/auth/signin", {
-        email,
-        password,
-      });
-  
-      console.log(response.data.access_token); 
-  
-      if (response.status===201) {
-        const {token,isAdmin} = response.data; 
-        if (token || isAdmin) {
-          localStorage.setItem('accessToken', token);
-          localStorage.setItem("userRole", isAdmin ? "admin" : "user");
-          console.log("navi")
-          navigate(isAdmin ? "/admin" : "/home");
-        } else {
-          setError("Token not found in response.");
-        }
+  event.preventDefault();
+
+  if (!email || !password) {
+    setError("Email and password are required.");
+    return;
+  }
+
+  setError("");
+
+  try {
+    const response = await axios.post("http://localhost:3000/auth/signin", {
+      email,
+      password,
+    });
+
+    console.log("Login Response:", response.data); 
+
+    if (response.status === 201) { 
+      const { access_token, isAdmin } = response.data; 
+
+      if (access_token) {
+        localStorage.setItem("accessToken", access_token); 
+        localStorage.setItem("isAdmin", isAdmin ? "true" : "false");
+        navigate(isAdmin ? "/admin" : "/home");
       } else {
-        setError("Invalid credentials, please try again.");
+        setError("Token not found in response.");
       }
-    } catch (error: any) {
-      console.error("Login error:", error.response?.data?.message || error.message);
-      setError(error.response?.data?.message || "Something went wrong. Please try again.");
+    } else {
+      setError("Invalid credentials, please try again.");
     }
-  };
-  
+  } catch (error: any) {
+    console.error("Login error:", error.response?.data?.message || error.message);
+    setError(error.response?.data?.message || "Something went wrong. Please try again.");
+  }
+
+};
 
   return (
     <div className="relative w-full h-screen">

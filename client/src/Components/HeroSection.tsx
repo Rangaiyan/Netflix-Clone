@@ -2,12 +2,12 @@ import heroImg from "../assets/hero.png";
 import { Link, useNavigate } from "react-router-dom";
 import { FiChevronRight } from "react-icons/fi";
 import { useState } from "react";
-import { p } from "framer-motion/client";
 
 const HeroSection = () => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('')
   const navigate = useNavigate();
+  console.log("herosection")
 
   const handleGetStarted = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -22,7 +22,6 @@ const HeroSection = () => {
   return (
     <div className="relative w-full h-screen">
       {/* Background Image inside Hero Text */}
-
       {/* Content */}
       <div className="relative z-2 px-12 md:px-10 py-4 flex flex-col h-full space-y-6">
         {/* Header */}

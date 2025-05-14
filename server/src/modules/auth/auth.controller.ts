@@ -17,7 +17,17 @@ export class AuthController {
     signin(@Request() req) {
       return this.authService.login(req.user); 
     }
-    
+    @Post('signin')
+async login(@Body() loginDto: Signin) {
+  const user = await this.authService.validateUser(loginDto.email, loginDto.password);
+  const access_token = await this.authService.login(user);
+
+  return {
+    access_token, 
+    isAdmin: user.isAdmin, 
+  };
+}
+
 
    
 

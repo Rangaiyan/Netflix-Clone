@@ -1,16 +1,16 @@
 import NFLogo from "../assets/netflix-logo.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Movie from "../Admin/AddMovie";
-import Series from "../Admin/AddSeries";
+import Movie from "./AddMovie";
+import Series from "./AddSeries";
 
 const Add = () => {
   const navigate = useNavigate();
   const [contentType, setContentType] = useState("movie");
   const handleLogout = () => {
-    localStorage.removeItem("accessToken"); // Clear stored token
-    localStorage.removeItem("isAdmin"); // Clear admin status
-    navigate("/login"); // Redirect to login page
+    localStorage.removeItem("accessToken"); 
+    localStorage.removeItem("isAdmin");
+    navigate("/login"); 
   };
   return (
     <>

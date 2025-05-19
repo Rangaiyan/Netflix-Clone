@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import logo from "../../assets/netflix-logo.png";
+import ProfileSetup from "../ProfileSetup/ProfileDetails";
 import axios from "axios";
 
 interface RegisterNavigationState {
@@ -18,54 +19,55 @@ const Register = () => {
   const [error, setError] = useState<string>("");
 
   const handleRegister = async (event: React.FormEvent) => {
-    event.preventDefault();
-  
-    if (!username.trim()) {
-      setError("Username is required.");
+  event.preventDefault();
+
+  if (!username.trim()) {
+    setError("Username is required.");
+    return;
+  }
+
+  if (!password || !confirmPassword) {
+    setError("Password fields cannot be empty.");
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    setError("Passwords do not match.");
+    return;
+  }
+
+  setError("");
+
+  try {
+    const response = await axios.post("http://localhost:3000/auth/signup", {
+      name: username,
+      email,
+      password,
+    });
+
+    if (response.data.message === "User already exists") {
+      setError("Email already registered. Please use a different one.");
       return;
     }
-  
-    if (!password || !confirmPassword) {
-      setError("Password fields cannot be empty.");
-      return;
-    }
-  
-    if (password !== confirmPassword) {
-      alert("Passwords don't match");
-      setError("Passwords do not match.");
-      return;
-    }
-  
-    setError("");
-  
-    try {
-      const response = await axios.post("http://localhost:3000/auth/signup", {
-        name: username,
-        email,
-        password,
-      });
-  
+
+    if (response.status === 200 || response.data.message === "User signed up successfully!") {
+      localStorage.setItem("accessToken", "mockToken"); // Save access token
+      localStorage.setItem("isNewUser", "true"); // Mark new user as true
       
-      if (response.data.message === "User already exists") {
-        setError("Email already registered. Please use a different one.");
-        return;
-      }
-  
-      if (response.status === 200 || response.data.message === "User signed up successfully!") {
-        navigate("/home");
-      } else {
-        setError("Signup failed. Please try again.");
-      }
-  
-    } catch (error: any) {
-      console.error("Signup error:", error);
-      if (error.response?.data?.message === "User already exists") {
-        setError("Email already registered. Please sign in.");
-      } else {
-        setError("Something went wrong. Please try again later.");
-      }
+      navigate("/ProfileSetup"); // Redirect to login before profile setup
+    } else {
+      setError("Signup failed. Please try again.");
     }
-  };
+  } catch (error: any) {
+    console.error("Signup error:", error);
+    if (error.response?.data?.message === "User already exists") {
+      setError("Email already registered. Please sign in.");
+    } else {
+      setError("Something went wrong. Please try again later.");
+    }
+  }
+};
+
   
   
   return (
